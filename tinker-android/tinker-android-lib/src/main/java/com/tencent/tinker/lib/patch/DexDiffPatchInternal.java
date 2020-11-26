@@ -528,7 +528,7 @@ public class DexDiffPatchInternal extends BasePatchInternal {
                         return false;
                     }
 
-                    TinkerLog.w(TAG, "patch file without verity md5...");
+                    TinkerLog.w(TAG, "patch file(ark) without verity md5...");
 
                     // Small patched dex generating strategy was disabled, we copy full original dex directly now.
                     //patchDexFile(apk, patch, rawApkFileEntry, null, info, smallPatchInfoFile, extractedFile);
@@ -560,10 +560,10 @@ public class DexDiffPatchInternal extends BasePatchInternal {
                     }
 
                     //check source crc instead of md5 for faster
-                    TinkerLog.w(TAG, "patch file without verity md5...");
+                    TinkerLog.w(TAG, "patch file(apk) without verity1 md5...");
 
                     patchDexFile(apk, patch, rawApkFileEntry, patchFileEntry, info, extractedFile);
-
+                    TinkerLog.w(TAG, "patch file(apk) without verity2 md5...");
                     if (!SharePatchFileUtil.verifyDexFileMd5(extractedFile, extractedFileMd5)) {
                         TinkerLog.w(TAG, "Failed to recover dex file when verify patched dex: " + extractedFile.getPath());
                         manager.getPatchReporter().onPatchTypeExtractFail(patchFile, extractedFile, info.rawName, type);
@@ -674,6 +674,7 @@ public class DexDiffPatchInternal extends BasePatchInternal {
      * @throws IOException
      */
     private static void patchDexFile(
+            TinkerLog.w(TAG, "patch file(apk) patchDexFile...");
         ZipFile baseApk, ZipFile patchPkg, ZipEntry oldDexEntry, ZipEntry patchFileEntry,
         ShareDexDiffPatchInfo patchInfo, File patchedDexFile) throws IOException {
         InputStream oldDexStream = null;
