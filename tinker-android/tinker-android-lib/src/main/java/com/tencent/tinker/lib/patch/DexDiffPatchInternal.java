@@ -674,11 +674,11 @@ public class DexDiffPatchInternal extends BasePatchInternal {
      * @throws IOException
      */
     private static void patchDexFile(
-            TinkerLog.w(TAG, "patch file(apk) patchDexFile...");
         ZipFile baseApk, ZipFile patchPkg, ZipEntry oldDexEntry, ZipEntry patchFileEntry,
         ShareDexDiffPatchInfo patchInfo, File patchedDexFile) throws IOException {
         InputStream oldDexStream = null;
         InputStream patchFileStream = null;
+        TinkerLog.w(TAG, "patch file(apk) patchDexFile...");
         try {
             oldDexStream = new BufferedInputStream(baseApk.getInputStream(oldDexEntry));
             patchFileStream = (patchFileEntry != null ? new BufferedInputStream(patchPkg.getInputStream(patchFileEntry)) : null);
