@@ -502,7 +502,66 @@ public class DexDiffPatchInternal extends BasePatchInternal {
 
                 ZipEntry patchFileEntry = patch.getEntry(patchRealPath);
                 ZipEntry rawApkFileEntry = apk.getEntry(patchRealPath);
-                TinkerLog.w(TAG, "patch file without verity md5...");
+
+                if (oldDexCrc.equals("0")) {
+                    if (patchFileEntry == null) {
+                        TinkerLog.w(TAG, "patch entry is null. path:" + patchRealPath);
+                        manager.getPatchReporter().onPatchTypeExtractFail(patchFile, extractedFile, info.rawName, type);
+                        return false;
+                    }
+
+                    //it is a new file, but maybe we need to repack the dex file
+                    if (!extractDexFile(patch, patchFileEntry, extractedFile, info)) {
+                        TinkerLog.w(TAG, "Failed to extract raw patch file " + extractedFile.getPath());
+                        manager.getPatchReporter().onPatchTypeExtractFail(patchFile, extractedFile, info.rawName, type);
+                        return false;
+                    }
+                } else if (dexDiffMd5.equals("0")) {
+                    // skip process old dex for real dalvik vm
+                    if (!isVmArt) {
+                        continue;
+                    }
+
+                    if (rawApkFileEntry == null) {
+                        TinkerLog.w(TAG, "apk entry is null. path:" + patchRealPath);
+                        manager.getPatchReporter().onPatchTypeExtractFail(patchFile, extractedFile, info.rawName, type);
+                        return false;
+                    }
+
+                    TinkerLog.w(TAG, "patch file without verity md5...");
+
+                    // Small patched dex generating strategy was disabled, we copy full original dex directly now.
+                    //patchDexFile(apk, patch, rawApkFileEntry, null, info, smallPatchInfoFile, extractedFile);
+                    extractDexFile(apk, rawApkFileEntry, extractedFile, info);
+
+                    if (!SharePatchFileUtil.verifyDexFileMd5(extractedFile, extractedFileMd5)) {
+                        TinkerLog.w(TAG, "Failed to recover dex file when verify patched dex: " + extractedFile.getPath());
+                        manager.getPatchReporter().onPatchTypeExtractFail(patchFile, extractedFile, info.rawName, type);
+                        SharePatchFileUtil.safeDeleteFile(extractedFile);
+                        return false;
+                    }
+                } else {
+                    if (patchFileEntry == null) {
+                        TinkerLog.w(TAG, "patch entry is null. path:" + patchRealPath);
+                        manager.getPatchReporter().onPatchTypeExtractFail(patchFile, extractedFile, info.rawName, type);
+                        return false;
+                    }
+
+                    if (!SharePatchFileUtil.checkIfMd5Valid(dexDiffMd5)) {
+                        TinkerLog.w(TAG, "meta file md5 invalid, type:%s, name: %s, md5: %s", ShareTinkerInternals.getTypeString(type), info.rawName, dexDiffMd5);
+                        manager.getPatchReporter().onPatchPackageCheckFail(patchFile, BasePatchInternal.getMetaCorruptedCode(type));
+                        return false;
+                    }
+
+                    if (rawApkFileEntry == null) {
+                        TinkerLog.w(TAG, "apk entry is null. path:" + patchRealPath);
+                        manager.getPatchReporter().onPatchTypeExtractFail(patchFile, extractedFile, info.rawName, type);
+                        return false;
+                    }
+
+                    //check source crc instead of md5 for faster
+                    TinkerLog.w(TAG, "patch file without verity md5...");
+
                     patchDexFile(apk, patch, rawApkFileEntry, patchFileEntry, info, extractedFile);
 
                     if (!SharePatchFileUtil.verifyDexFileMd5(extractedFile, extractedFileMd5)) {
