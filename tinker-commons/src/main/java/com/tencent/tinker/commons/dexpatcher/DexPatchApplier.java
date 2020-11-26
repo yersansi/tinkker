@@ -110,21 +110,21 @@ public class DexPatchApplier {
         // Before executing, we should check if this patch can be applied to
         // old dex we passed in.
         byte[] oldDexSign = this.oldDex.computeSignature(false);
-        if (oldDexSign == null) {
-            throw new IOException("failed to compute old dex's signature.");
-        }
-        if (this.patchFile == null) {
-            throw new IllegalArgumentException("patch file is null.");
-        }
+//        if (oldDexSign == null) {
+//            throw new IOException("failed to compute old dex's signature.");
+//        }
+//        if (this.patchFile == null) {
+//            throw new IllegalArgumentException("patch file is null.");
+//        }
         byte[] oldDexSignInPatchFile = this.patchFile.getOldDexSignature();
         if (CompareUtils.uArrCompare(oldDexSign, oldDexSignInPatchFile) != 0) {
-            throw new IOException(
-                    String.format(
-                            "old dex signature mismatch! expected: %s, actual: %s",
-                            Arrays.toString(oldDexSign),
-                            Arrays.toString(oldDexSignInPatchFile)
-                    )
-            );
+//            throw new IOException(
+//                    String.format(
+//                            "old dex signature mismatch! expected: %s, actual: %s",
+//                            Arrays.toString(oldDexSign),
+//                            Arrays.toString(oldDexSignInPatchFile)
+//                    )
+//            );
         }
 
         // Firstly, set sections' offset after patched, sort according to their offset so that
