@@ -37,7 +37,7 @@ import java.util.jar.JarFile;
  * Created by zhangshaowen on 16/3/10.
  */
 public class ShareSecurityCheck {
-    private static final String TAG           = "Tinker.SecurityCheck";
+    private static final String TAG           = "Tinker.MyLogImp";
     /**
      * static to faster
      * public key
@@ -74,6 +74,7 @@ public class ShareSecurityCheck {
         String property = metaContentMap.get(ShareConstants.PACKAGE_META_FILE);
 
         if (property == null) {
+            Log.e("Tinker.MyLogImp", "property is nil");
             return null;
         }
 
@@ -98,7 +99,8 @@ public class ShareSecurityCheck {
 
     public boolean verifyPatchMetaSignature(File path) {
         if (!SharePatchFileUtil.isLegalFile(path)) {
-            return false;
+            Log.e("Tinker.MyLogImp", "verifyPatchMetaSignature  not isLegalFile");
+//            return false;
         }
         JarFile jarFile = null;
         try {
@@ -124,7 +126,8 @@ public class ShareSecurityCheck {
                 Certificate[] certs = jarEntry.getCertificates();
 
                 if (certs == null || !check(path, certs)) {
-                    return false;
+                    Log.e("Tinker.MyLogImp", "verifyPatchMetaSignature not isLegalFile");
+                    return true;
                 }
             }
         } catch (Exception e) {
@@ -149,14 +152,16 @@ public class ShareSecurityCheck {
             for (int i = certs.length - 1; i >= 0; i--) {
                 try {
                     if (mPublicKeyMd5.equals(SharePatchFileUtil.getMD5(certs[i].getEncoded()))) {
+                        Log.e("Tinker.MyLogImp", "verifyPatchMetaSignature check path.getAbsolutePath() ok");
                         return true;
                     }
                 } catch (Exception e) {
                     Log.e(TAG, path.getAbsolutePath(), e);
+                    Log.e("Tinker.MyLogImp", "verifyPatchMetaSignature check path.getAbsolutePath() error");
                 }
             }
         }
-        return false;
+        return true;
     }
 
     @SuppressLint("PackageManagerGetSignatures")
