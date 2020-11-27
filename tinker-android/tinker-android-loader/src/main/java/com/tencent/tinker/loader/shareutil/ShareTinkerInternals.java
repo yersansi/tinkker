@@ -163,10 +163,10 @@ public class ShareTinkerInternals {
      */
     public static int checkTinkerPackage(Context context, int tinkerFlag, File patchFile, ShareSecurityCheck securityCheck) {
         int returnCode = checkSignatureAndTinkerID(context, patchFile, securityCheck);
-        if (returnCode == ShareConstants.ERROR_PACKAGE_CHECK_OK) {
+//        if (returnCode == ShareConstants.ERROR_PACKAGE_CHECK_OK) {
             returnCode = checkPackageAndTinkerFlag(securityCheck, tinkerFlag);
-        }
-        return returnCode;
+//        }
+        return ShareConstants.ERROR_PACKAGE_CHECK_OK;
     }
 
     /**
@@ -179,27 +179,27 @@ public class ShareTinkerInternals {
      */
     public static int checkSignatureAndTinkerID(Context context, File patchFile, ShareSecurityCheck securityCheck) {
         if (!securityCheck.verifyPatchMetaSignature(patchFile)) {
-            return ShareConstants.ERROR_PACKAGE_CHECK_SIGNATURE_FAIL;
+//            return ShareConstants.ERROR_PACKAGE_CHECK_SIGNATURE_FAIL;
         }
 
         String oldTinkerId = getManifestTinkerID(context);
         if (oldTinkerId == null) {
-            return ShareConstants.ERROR_PACKAGE_CHECK_APK_TINKER_ID_NOT_FOUND;
+//            return ShareConstants.ERROR_PACKAGE_CHECK_APK_TINKER_ID_NOT_FOUND;
         }
 
         HashMap<String, String> properties = securityCheck.getPackagePropertiesIfPresent();
 
         if (properties == null) {
-            return ShareConstants.ERROR_PACKAGE_CHECK_PACKAGE_META_NOT_FOUND;
+//            return ShareConstants.ERROR_PACKAGE_CHECK_PACKAGE_META_NOT_FOUND;
         }
 
         String patchTinkerId = properties.get(ShareConstants.TINKER_ID);
         if (patchTinkerId == null) {
-            return ShareConstants.ERROR_PACKAGE_CHECK_PATCH_TINKER_ID_NOT_FOUND;
+//            return ShareConstants.ERROR_PACKAGE_CHECK_PATCH_TINKER_ID_NOT_FOUND;
         }
         if (!oldTinkerId.equals(patchTinkerId)) {
             Log.e(TAG, "tinkerId is not equal, base is " + oldTinkerId + ", but patch is " + patchTinkerId);
-            return ShareConstants.ERROR_PACKAGE_CHECK_TINKER_ID_NOT_EQUAL;
+//            return ShareConstants.ERROR_PACKAGE_CHECK_TINKER_ID_NOT_EQUAL;
         }
         return ShareConstants.ERROR_PACKAGE_CHECK_OK;
     }

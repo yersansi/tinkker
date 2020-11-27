@@ -59,7 +59,7 @@ public class UpgradePatch extends AbstractPatch {
         //check the signature, we should create a new checker
         ShareSecurityCheck signatureCheck = new ShareSecurityCheck(context);
 
-//        int returnCode = ShareTinkerInternals.checkTinkerPackage(context, manager.getTinkerFlags(), patchFile, signatureCheck);
+        int returnCode = ShareTinkerInternals.checkTinkerPackage(context, manager.getTinkerFlags(), patchFile, signatureCheck);
 //        if (returnCode != ShareConstants.ERROR_PACKAGE_CHECK_OK) {
 //            TinkerLog.e(TAG, "UpgradePatch tryPatch:onPatchPackageCheckFail");
 //            manager.getPatchReporter().onPatchPackageCheckFail(patchFile, returnCode);
@@ -74,7 +74,7 @@ public class UpgradePatch extends AbstractPatch {
         //use md5 as version
         patchResult.patchVersion = patchMd5;
 
-        TinkerLog.i(TAG, "UpgradePatch tryPatch:patchMd5:%s", patchMd5);
+        TinkerLog.i(TAG, "UpgradePatch tryPatch:patchMd5x1:%s", patchMd5);
 
         //check ok, we can real recover a new patch
         final String patchDirectory = manager.getPatchDirectory().getAbsolutePath();
