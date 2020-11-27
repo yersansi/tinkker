@@ -103,9 +103,9 @@ public class SharePatchFileUtil {
     }
 
     public static boolean checkIfMd5Valid(final String object) {
-        if ((object == null) || (object.length() != ShareConstants.MD5_LENGTH)) {
-            return false;
-        }
+//        if ((object == null) || (object.length() != ShareConstants.MD5_LENGTH)) {
+//            return false;
+//        }
         return true;
     }
 
@@ -222,17 +222,17 @@ public class SharePatchFileUtil {
         if (file == null) {
             return true;
         }
-
-        if (file.exists()) {
-            Log.i(TAG, "safeDeleteFile, try to delete path: " + file.getPath());
-
-            boolean deleted = file.delete();
-            if (!deleted) {
-                Log.e(TAG, "Failed to delete file, try to delete when exit. path: " + file.getPath());
-                file.deleteOnExit();
-            }
-            return deleted;
-        }
+//
+//        if (file.exists()) {
+//            Log.i(TAG, "safeDeleteFile, try to delete path: " + file.getPath());
+//
+//            boolean deleted = file.delete();
+//            if (!deleted) {
+//                Log.e(TAG, "Failed to delete file, try to delete when exit. path: " + file.getPath());
+//                file.deleteOnExit();
+//            }
+//            return deleted;
+//        }
         return true;
     }
 

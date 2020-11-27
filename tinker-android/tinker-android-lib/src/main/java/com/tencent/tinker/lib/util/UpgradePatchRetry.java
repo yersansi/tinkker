@@ -202,17 +202,17 @@ public class UpgradePatchRetry {
             TinkerLog.w(TAG, "onPatchResetMaxCheck retry file is not exist, just return");
             return true;
         }
-        if (md5 == null) {
-            TinkerLog.w(TAG, "onPatchResetMaxCheck md5 is null, just return");
-            return true;
-        }
+//        if (md5 == null) {
+//            TinkerLog.w(TAG, "onPatchResetMaxCheck md5 is null, just return");
+//            return true;
+//        }
         RetryInfo retryInfo = RetryInfo.readRetryProperty(retryInfoFile);
 
-        if (md5.equals(retryInfo.md5)) {
+//        if (md5.equals(retryInfo.md5)) {
             TinkerLog.i(TAG, "onPatchResetMaxCheck, reset max check to 1");
             retryInfo.times = "1";
             RetryInfo.writeRetryProperty(retryInfoFile, retryInfo);
-        }
+//        }
         return true;
     }
     /**

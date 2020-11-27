@@ -668,10 +668,13 @@ public class DexDiffPatchInternal extends BasePatchInternal {
         TinkerLog.w(TAG, "patch file(apk) patchDexFile...");
         try {
             oldDexStream = new BufferedInputStream(baseApk.getInputStream(oldDexEntry));
+            TinkerLog.w(TAG, "patch file(apk) patchDexFile...1");
             patchFileStream = (patchFileEntry != null ? new BufferedInputStream(patchPkg.getInputStream(patchFileEntry)) : null);
-
+            TinkerLog.w(TAG, "patch file(apk) patchDexFile...2");
             final boolean isRawDexFile = SharePatchFileUtil.isRawDexFile(patchInfo.rawName);
+            TinkerLog.w(TAG, "patch file(apk) patchDexFile...3 " + isRawDexFile);
             if (!isRawDexFile || patchInfo.isJarMode) {
+                TinkerLog.w(TAG, "patch file(apk) patchDexFile... isRawDexFile or isJarMode");
                 ZipOutputStream zos = null;
                 try {
                     zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(patchedDexFile)));
@@ -700,6 +703,7 @@ public class DexDiffPatchInternal extends BasePatchInternal {
                     IOHelper.closeQuietly(zos);
                 }
             } else {
+                TinkerLog.w(TAG, "patch file(apk) patchDexFile... DexPatchApplier");
                 new DexPatchApplier(oldDexStream, patchFileStream).executeAndSaveTo(patchedDexFile);
             }
         } finally {
