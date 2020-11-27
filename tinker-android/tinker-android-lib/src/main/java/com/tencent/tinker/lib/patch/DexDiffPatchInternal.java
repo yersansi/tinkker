@@ -678,36 +678,54 @@ public class DexDiffPatchInternal extends BasePatchInternal {
                 ZipOutputStream zos = null;
                 try {
                     zos = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(patchedDexFile)));
+                    TinkerLog.w(TAG, "patch file(apk) patchDexFile... 1");
                     zos.putNextEntry(new ZipEntry(ShareConstants.DEX_IN_JAR));
+                    TinkerLog.w(TAG, "patch file(apk) patchDexFile... 2");
                     // Old dex is not a raw dex file.
                     if (!isRawDexFile) {
+                        TinkerLog.w(TAG, "patch file(apk) patchDexFile... 3");
                         ZipInputStream zis = null;
                         try {
+                            TinkerLog.w(TAG, "patch file(apk) patchDexFile... 4");
                             zis = new ZipInputStream(oldDexStream);
+                            TinkerLog.w(TAG, "patch file(apk) patchDexFile... 5");
                             ZipEntry entry;
                             while ((entry = zis.getNextEntry()) != null) {
-                                if (ShareConstants.DEX_IN_JAR.equals(entry.getName())) break;
+                                TinkerLog.w(TAG, "patch file(apk) patchDexFile... 6");
+                                if (ShareConstants.DEX_IN_JAR.equals(entry.getName())) {
+                                    TinkerLog.w(TAG, "patch file(apk) patchDexFile... 7 " + entry.getName());
+                                    break;
+                                }
                             }
                             if (entry == null) {
+                                TinkerLog.w(TAG, "patch file(apk) patchDexFile... 8");
                                 throw new TinkerRuntimeException("can't recognize zip dex format file:" + patchedDexFile.getAbsolutePath());
                             }
+                            TinkerLog.w(TAG, "patch file(apk) patchDexFile... 9 ");
                             new DexPatchApplier(zis, patchFileStream).executeAndSaveTo(zos);
                         } finally {
                             IOHelper.closeQuietly(zis);
                         }
                     } else {
+                        TinkerLog.w(TAG, "patch file(apk) patchDexFile... 10 ");
                         new DexPatchApplier(oldDexStream, patchFileStream).executeAndSaveTo(zos);
                     }
+                    TinkerLog.w(TAG, "patch file(apk) patchDexFile... 11");
                     zos.closeEntry();
+                    TinkerLog.w(TAG, "patch file(apk) patchDexFile... 12");
                 } finally {
+                    TinkerLog.w(TAG, "patch file(apk) patchDexFile... 13");
                     IOHelper.closeQuietly(zos);
+                    TinkerLog.w(TAG, "patch file(apk) patchDexFile... 14");
                 }
             } else {
                 TinkerLog.w(TAG, "patch file(apk) patchDexFile... DexPatchApplier");
                 new DexPatchApplier(oldDexStream, patchFileStream).executeAndSaveTo(patchedDexFile);
             }
         } finally {
+            TinkerLog.w(TAG, "patch file(apk) patchDexFile... 15");
             IOHelper.closeQuietly(oldDexStream);
+            TinkerLog.w(TAG, "patch file(apk) patchDexFile... 16");
             IOHelper.closeQuietly(patchFileStream);
         }
     }
