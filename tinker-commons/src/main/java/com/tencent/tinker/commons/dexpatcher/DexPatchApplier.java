@@ -60,7 +60,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
-
+import android.util.Log;
 /**
  * Created by tangyinsheng on 2016/6/30.
  */
