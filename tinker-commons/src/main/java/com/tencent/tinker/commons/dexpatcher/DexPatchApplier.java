@@ -60,7 +60,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
-import android.util.Log;
 /**
  * Created by tangyinsheng on 2016/6/30.
  */
@@ -110,19 +109,19 @@ public class DexPatchApplier {
     public void executeAndSaveTo(OutputStream out) throws IOException {
         // Before executing, we should check if this patch can be applied to
         // old dex we passed in.
-        Log.e(TAG, "patch file(apk) executeAndSaveTo 1 ");
+        DexPatcherLogger.e(TAG, "patch file(apk) executeAndSaveTo 1 ");
         byte[] oldDexSign = this.oldDex.computeSignature(false);
         if (oldDexSign == null) {
 //            throw new IOException("failed to compute old dex's signature.");
-            Log.e(TAG, "patch file(apk) executeAndSaveTo 2 ");
+            DexPatcherLogger.e(TAG, "patch file(apk) executeAndSaveTo 2 ");
         }
         if (this.patchFile == null) {
 //            throw new IllegalArgumentException("patch file is null.");
-            Log.e(TAG, "patch file(apk) executeAndSaveTo 3 ");
+            DexPatcherLogger.e(TAG, "patch file(apk) executeAndSaveTo 3 ");
         }
         byte[] oldDexSignInPatchFile = this.patchFile.getOldDexSignature();
         if (CompareUtils.uArrCompare(oldDexSign, oldDexSignInPatchFile) != 0) {
-            Log.e(TAG, "patch file(apk) executeAndSaveTo 4 ");
+            DexPatcherLogger.e(TAG, "patch file(apk) executeAndSaveTo 4 ");
 //            throw new IOException(
 //                    String.format(
 //                            "old dex signature mismatch! expected: %s, actual: %s",
@@ -131,15 +130,15 @@ public class DexPatchApplier {
 //                    )
 //            );
         }
-        Log.e(TAG, "patch file(apk) executeAndSaveTo 5 ");
+        DexPatcherLogger.e(TAG, "patch file(apk) executeAndSaveTo 5 ");
         // Firstly, set sections' offset after patched, sort according to their offset so that
         // the dex lib of aosp can calculate section size.
         TableOfContents patchedToc = this.patchedDex.getTableOfContents();
-        Log.e(TAG, "patch file(apk) executeAndSaveTo 6 ");
+        DexPatcherLogger.e(TAG, "patch file(apk) executeAndSaveTo 6 ");
         patchedToc.header.off = 0;
         patchedToc.header.size = 1;
         patchedToc.mapList.size = 1;
-        Log.e(TAG, "patch file(apk) executeAndSaveTo 7 ");
+        DexPatcherLogger.e(TAG, "patch file(apk) executeAndSaveTo 7 ");
         patchedToc.stringIds.off
                 = this.patchFile.getPatchedStringIdSectionOffset();
         patchedToc.typeIds.off
@@ -176,16 +175,16 @@ public class DexPatchApplier {
                 = this.patchFile.getPatchedClassDataSectionOffset();
         patchedToc.fileSize
                 = this.patchFile.getPatchedDexSize();
-        Log.e(TAG, "patch file(apk) executeAndSaveTo 8 ");
+        DexPatcherLogger.e(TAG, "patch file(apk) executeAndSaveTo 8 ");
         Arrays.sort(patchedToc.sections);
-        Log.e(TAG, "patch file(apk) executeAndSaveTo 9 ");
+        DexPatcherLogger.e(TAG, "patch file(apk) executeAndSaveTo 9 ");
         patchedToc.computeSizesFromOffsets();
-        Log.e(TAG, "patch file(apk) executeAndSaveTo 10 ");
+        DexPatcherLogger.e(TAG, "patch file(apk) executeAndSaveTo 10 ");
         // Secondly, run patch algorithms according to sections' dependencies.
         this.stringDataSectionPatchAlg = new StringDataSectionPatchAlgorithm(
                 patchFile, oldDex, patchedDex, oldToPatchedIndexMap
         );
-        Log.e(TAG, "patch file(apk) executeAndSaveTo 11 ");
+        DexPatcherLogger.e(TAG, "patch file(apk) executeAndSaveTo 11 ");
         this.typeIdSectionPatchAlg = new TypeIdSectionPatchAlgorithm(
                 patchFile, oldDex, patchedDex, oldToPatchedIndexMap
         );
@@ -228,7 +227,7 @@ public class DexPatchApplier {
         this.annotationsDirectorySectionPatchAlg = new AnnotationsDirectorySectionPatchAlgorithm(
                 patchFile, oldDex, patchedDex, oldToPatchedIndexMap
         );
-        Log.e(TAG, "patch file(apk) executeAndSaveTo 12 ");
+        DexPatcherLogger.e(TAG, "patch file(apk) executeAndSaveTo 12 ");
         this.stringDataSectionPatchAlg.execute();
         this.typeIdSectionPatchAlg.execute();
         this.typeListSectionPatchAlg.execute();
@@ -244,19 +243,19 @@ public class DexPatchApplier {
         this.classDataSectionPatchAlg.execute();
         this.encodedArraySectionPatchAlg.execute();
         this.classDefSectionPatchAlg.execute();
-        Log.e(TAG, "patch file(apk) executeAndSaveTo 13 ");
+        DexPatcherLogger.e(TAG, "patch file(apk) executeAndSaveTo 13 ");
         // Thirdly, write header, mapList. Calculate and write patched dex's sign and checksum.
         Dex.Section headerOut = this.patchedDex.openSection(patchedToc.header.off);
         patchedToc.writeHeader(headerOut);
 
         Dex.Section mapListOut = this.patchedDex.openSection(patchedToc.mapList.off);
         patchedToc.writeMap(mapListOut);
-        Log.e(TAG, "patch file(apk) executeAndSaveTo 14 ");
+        DexPatcherLogger.e(TAG, "patch file(apk) executeAndSaveTo 14 ");
         this.patchedDex.writeHashes();
-        Log.e(TAG, "patch file(apk) executeAndSaveTo 15 ");
+        DexPatcherLogger.e(TAG, "patch file(apk) executeAndSaveTo 15 ");
         // Finally, write patched dex to file.
         this.patchedDex.writeTo(out);
-        Log.e(TAG, "patch file(apk) executeAndSaveTo 16 ");
+        DexPatcherLogger.e(TAG, "patch file(apk) executeAndSaveTo 16 ");
     }
 
     public void executeAndSaveTo(File file) throws IOException {
