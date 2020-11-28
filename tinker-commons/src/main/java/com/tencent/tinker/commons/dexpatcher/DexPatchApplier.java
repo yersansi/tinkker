@@ -122,6 +122,12 @@ public class DexPatchApplier {
         byte[] oldDexSignInPatchFile = this.patchFile.getOldDexSignature();
         if (CompareUtils.uArrCompare(oldDexSign, oldDexSignInPatchFile) != 0) {
             System.out.println("patch file(apk) executeAndSaveTo 4 ");
+            String errorMsg = String.format(
+                            "old dex signature mismatch! expected: %s, actual: %s",
+                            Arrays.toString(oldDexSign),
+                            Arrays.toString(oldDexSignInPatchFile)
+                    );
+            System.out.println("patch file(apk) executeAndSaveTo error:  " + errorMsg);
 //            throw new IOException(
 //                    String.format(
 //                            "old dex signature mismatch! expected: %s, actual: %s",
