@@ -255,8 +255,9 @@ public class ResDiffPatchInternal extends BasePatchInternal {
             String baseArscCrc = String.valueOf(arscEntry.getCrc());
             if (!baseArscCrc.equals(resPatchInfo.arscBaseCrc)) {
                 TinkerLog.e(TAG, "resources.arsc's crc is not equal, expect crc: %s, got crc: %s", resPatchInfo.arscBaseCrc, baseArscCrc);
-                manager.getPatchReporter().onPatchTypeExtractFail(patchFile, arscFile, ShareConstants.RES_ARSC, type);
-                return false;
+//                manager.getPatchReporter().onPatchTypeExtractFail(patchFile, arscFile, ShareConstants.RES_ARSC, type);
+//                return false;
+                TinkerLog.e(TAG, "ignore error...");
             }
 
             //resource arsc is not changed, just return true
