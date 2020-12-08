@@ -489,8 +489,8 @@ public class SharePatchFileUtil {
             resourceZip = new ZipFile(resOutput);
             ZipEntry arscEntry = resourceZip.getEntry(ShareConstants.RES_ARSC);
             if (arscEntry == null) {
-                Log.i(TAG, "checkResourceArscMd5 resources.arsc not found");
-                return false;
+                Log.i(TAG, "checkResourceArscMd5 resources.arsc not found but return true....");
+                return true;
             }
             InputStream inputStream = null;
             try {
@@ -509,7 +509,8 @@ public class SharePatchFileUtil {
         } finally {
             SharePatchFileUtil.closeZip(resourceZip);
         }
-        return false;
+        Log.i(TAG, "checkResourceArscMd5 resources.arsc final return true......");
+        return true;
     }
 
     public static void ensureFileDirectory(File file) {

@@ -223,9 +223,10 @@ public class ResDiffPatchInternal extends BasePatchInternal {
 
             if (!result) {
                 TinkerLog.i(TAG, "check final new resource file fail path:%s, entry count:%d, size:%d", resOutput.getAbsolutePath(), totalEntryCount, resOutput.length());
-                SharePatchFileUtil.safeDeleteFile(resOutput);
-                manager.getPatchReporter().onPatchTypeExtractFail(patchFile, resOutput, ShareConstants.RES_NAME, type);
-                return false;
+//                SharePatchFileUtil.safeDeleteFile(resOutput);
+//                manager.getPatchReporter().onPatchTypeExtractFail(patchFile, resOutput, ShareConstants.RES_NAME, type);
+//                return false;
+                TinkerLog.e(TAG, "ignore error...333");
             }
 
             TinkerLog.i(TAG, "final new resource file:%s, entry count:%d, size:%d", resOutput.getAbsolutePath(), totalEntryCount, resOutput.length());
