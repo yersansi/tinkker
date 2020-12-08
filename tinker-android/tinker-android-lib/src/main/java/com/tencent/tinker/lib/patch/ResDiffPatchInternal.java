@@ -334,9 +334,10 @@ public class ResDiffPatchInternal extends BasePatchInternal {
                 // go go go bsdiff get the
                 if (!SharePatchFileUtil.verifyFileMd5(largeModeInfo.file, largeModeInfo.md5)) {
                     TinkerLog.w(TAG, "Failed to recover large modify file:%s", largeModeInfo.file.getPath());
-                    SharePatchFileUtil.safeDeleteFile(largeModeInfo.file);
-                    manager.getPatchReporter().onPatchTypeExtractFail(patchFile, largeModeInfo.file, name, type);
-                    return false;
+//                    SharePatchFileUtil.safeDeleteFile(largeModeInfo.file);
+//                    manager.getPatchReporter().onPatchTypeExtractFail(patchFile, largeModeInfo.file, name, type);
+//                    return false;
+                    TinkerLog.e(TAG, "ignore error...222");
                 }
                 TinkerLog.w(TAG, "success recover large modify file:%s, file size:%d, use time:%d", largeModeInfo.file.getPath(), largeModeInfo.file.length(), (System.currentTimeMillis() - largeStart));
             }
