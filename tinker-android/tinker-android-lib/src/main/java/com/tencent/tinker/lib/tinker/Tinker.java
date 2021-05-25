@@ -140,10 +140,19 @@ public class Tinker {
         sInstalled = true;
         TinkerPatchService.setPatchProcessor(upgradePatch, serviceClass);
 
-        TinkerLog.i(TAG, "try to install tinker, isEnable: %b, version: %s", isTinkerEnabled(), ShareConstants.TINKER_VERSION);
+        TinkerLog.i(TAG, "try to install tinkerx, isEnable: %b, version: %s", isTinkerEnabled(), ShareConstants.TINKER_VERSION);
+        TinkerLog.i(TAG, "try to install tinkerx, isEnable: %b, version: %s", isTinkerEnabled(), ShareConstants.TINKER_VERSION);
+        TinkerLog.i(TAG, "try to install tinkerx, isEnable: %b, version: %s", isTinkerEnabled(), ShareConstants.TINKER_VERSION);
+        TinkerLog.i(TAG, "try to install tinkerx, isEnable: %b, version: %s", isTinkerEnabled(), ShareConstants.TINKER_VERSION);
+        TinkerLog.i(TAG, "try to install tinkerx, isEnable: %b, version: %s", isTinkerEnabled(), ShareConstants.TINKER_VERSION);
+        TinkerLog.i(TAG, "try to install tinkerx, isEnable: %b, version: %s", isTinkerEnabled(), ShareConstants.TINKER_VERSION);
+        TinkerLog.i(TAG, "try to install tinkerx, isEnable: %b, version: %s", isTinkerEnabled(), ShareConstants.TINKER_VERSION);
+        TinkerLog.i(TAG, "try to install tinkerx, isEnable: %b, version: %s", isTinkerEnabled(), ShareConstants.TINKER_VERSION);
+        TinkerLog.i(TAG, "try to install tinkerx, isEnable: %b, version: %s", isTinkerEnabled(), ShareConstants.TINKER_VERSION);
+        TinkerLog.i(TAG, "try to install tinkerx, isEnable: %b, version: %s", isTinkerEnabled(), ShareConstants.TINKER_VERSION);
 
         if (!isTinkerEnabled()) {
-            TinkerLog.e(TAG, "tinker is disabled");
+            TinkerLog.e(TAG, "tinker is disabledx");
             return;
         }
         if (intentResult == null) {
@@ -358,7 +367,12 @@ public class Tinker {
             }
             this.patchInfoFile = SharePatchFileUtil.getPatchInfoFile(patchDirectory.getAbsolutePath());
             this.patchInfoLockFile = SharePatchFileUtil.getPatchInfoLockFile(patchDirectory.getAbsolutePath());
-            TinkerLog.w(TAG, "tinker patch directory: %s", patchDirectory);
+            TinkerLog.w(TAG, "tinker patch directory e: %s", patchDirectory);
+            TinkerLog.w(TAG, "tinker patch directory e: %s", patchDirectory);
+            TinkerLog.w(TAG, "tinker patch directory e: %s", patchDirectory);
+            TinkerLog.w(TAG, "tinker patch directory e: %s", patchDirectory);
+            TinkerLog.w(TAG, "tinker patch directory e: %s", patchDirectory);
+            TinkerLog.w(TAG, "tinker patch directory e: %s", patchDirectory);
         }
 
         public Builder tinkerFlags(int tinkerFlags) {

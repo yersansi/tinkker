@@ -126,13 +126,13 @@ public class ShareSecurityCheck {
                 Certificate[] certs = jarEntry.getCertificates();
 
                 if (certs == null || !check(path, certs)) {
-                    Log.e("Tinker.MyLogImp", "verifyPatchMetaSignature not isLegalFile");
+                    Log.e("Tinker.MyLogImp", "verifyPatchMetaSignatureeeeeeee not isLegalFile");
                     return true;
                 }
             }
         } catch (Exception e) {
             throw new TinkerRuntimeException(
-                String.format("ShareSecurityCheck file %s, size %d verifyPatchMetaSignature fail", path.getAbsolutePath(), path.length()), e);
+                String.format("ShareSecurityCheck file %s, size %d verifyPatchMetaSignatureeeeeeee fail", path.getAbsolutePath(), path.length()), e);
         } finally {
             try {
                 if (jarFile != null) {
@@ -152,12 +152,12 @@ public class ShareSecurityCheck {
             for (int i = certs.length - 1; i >= 0; i--) {
                 try {
                     if (mPublicKeyMd5.equals(SharePatchFileUtil.getMD5(certs[i].getEncoded()))) {
-                        Log.e("Tinker.MyLogImp", "verifyPatchMetaSignature check path.getAbsolutePath() ok");
+                        Log.e("Tinker.MyLogImp", "verifyPatchMetaSignatureeeee check path.getAbsolutePath() ok");
                         return true;
                     }
                 } catch (Exception e) {
                     Log.e(TAG, path.getAbsolutePath(), e);
-                    Log.e("Tinker.MyLogImp", "verifyPatchMetaSignature check path.getAbsolutePath() error");
+                    Log.e("Tinker.MyLogImp", "verifyPatchMetaSignatureeeeee check path.getAbsolutePath() error");
                 }
             }
         }
